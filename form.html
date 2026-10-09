@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block title %}{{ 'Жаңа пароль' if mode == 'add' else 'Өңдеу' }}{% endblock %}
+{% block content %}
+<section class="panel">
+  <h1>{{ 'Жаңа пароль' if mode == 'add' else 'Жазбаны өңдеу' }}</h1>
+  <form method="post">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+    <label>Атауы <input name="title" required value="{{ entry.get('title', '') }}" placeholder="Мысалы, Gmail"></label>
+    <label>Сайт мекенжайы <input name="url" value="{{ entry.get('url', '') or '' }}" placeholder="https://"></label>
+    <label>Логин немесе email <input name="username" value="{{ entry.get('username', '') or '' }}" autocomplete="off"></label>
+    <label>Пароль
+      <span class="inline">
+        <input id="pw" type="password" name="password" autocomplete="new-password" {{ 'required' if mode == 'add' }}
+               placeholder="{{ 'Өзгертпесеңіз, бос қалдырыңыз' if mode == 'edit' }}">
+        <button class="btn ghost" type="button" id="toggle-pw">Көрсету</button>
+        <button class="btn ghost" type="button" id="gen-pw">Жасау</button>
+      </span>
+    </label>
+    <div class="gen" id="gen-box" hidden>
+      <label>Ұзындығы: <output id="len-out">20</output>
+        <input type="range" id="len" min="12" max="48" value="20"></label>
+      <label class="check"><input type="checkbox" id="sym" checked> Арнайы таңбалар (!@#$)</label>
+    </div>
+    <label>Жазбалар <textarea name="notes" rows="3">{{ entry.get('notes', '') }}</textarea></label>
+    <div class="bar">
+      <button class="btn" type="submit">Сақтау</button>
+      <a class="btn ghost" href="{{ url_for('dashboard') }}">Болдырмау</a>
+    </div>
+  </form>
+</section>
+{% endblock %}

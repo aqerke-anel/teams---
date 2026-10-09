@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block title %}Тіркелу{% endblock %}
+{% block content %}
+<section class="panel narrow">
+  <h1>Жаңа сейф жасау</h1>
+  <form method="post">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+    <label>Логин <input name="username" required minlength="3" autofocus autocomplete="username"></label>
+    <label>Master пароль <input type="password" name="password" required minlength="10" autocomplete="new-password"></label>
+    <label>Master парольді қайталаңыз <input type="password" name="confirm" required minlength="10" autocomplete="new-password"></label>
+    <button class="btn" type="submit">Тіркелу</button>
+  </form>
+  <p class="warn">Master парольді ұмытсаңыз, сақталған парольдерді қалпына келтіру мүмкін емес. Оны ешкімге бермеңіз.</p>
+  <p class="hint">Аккаунтыңыз бар ма? <a href="{{ url_for('login') }}">Кіру</a></p>
+</section>
+{% endblock %}
